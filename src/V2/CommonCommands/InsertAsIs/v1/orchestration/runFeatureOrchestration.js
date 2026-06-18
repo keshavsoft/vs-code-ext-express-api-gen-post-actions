@@ -2,7 +2,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import * as vscode from 'vscode';
 
-import { find } from 'kschema-fs-api-gen-get-actions';
+import { insertAsIs } from 'kschema-fs-api-gen-post-actions';
 
 import { openFileInEditor } from '../openFile.js';
 
@@ -18,9 +18,9 @@ export async function runFeatureOrchestration({ context, uri }) {
         templatePath: fileURLToPath(new URL('../templates/Base', import.meta.url))
     };
 
-    await find({
+    await insertAsIs({
         toPath: context.targetPath, inTargetPath: workspace,
-        inGenerateRest: true
+        inGenerateRest: true, inGenerateRest: true
     });
 
     openFileInEditor({
