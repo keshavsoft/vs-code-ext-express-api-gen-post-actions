@@ -4,7 +4,7 @@
   "description": "express generate from endpoints file, get actions",
   "publisher": "KeshavSoft",
   "type": "module",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "engines": {
     "vscode": "^1.116.0"
   },
@@ -20,8 +20,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "extension.express.api.gen.get.actions",
-        "title": "SplitGet"
+        "command": "extension.express.api.gen.post.actions",
+        "title": "Split-Post"
       }
     ],
     "menus": {
@@ -29,7 +29,7 @@
       "editor/context": [],
       "editor/title": [
         {
-          "command": "extension.express.api.gen.get.actions",
+          "command": "extension.express.api.gen.post.actions",
           "when": "resourceFilename == end-points.js",
           "group": "navigation@7"
         }
@@ -50,6 +50,6 @@
     "@vscode/test-electron": "^2.5.2"
   },
   "dependencies": {
-    "kschema-fs-api-gen-post-actions": "^1.5.4"
+    "kschema-fs-api-gen-post-actions": "^1.9.2"
   }
 }

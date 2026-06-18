@@ -4,7 +4,7 @@ import splitEditor from './ForSplit/index.js';
 
 const registerAllCommands = (context) => {
     const splitCommand = vscode.commands.registerCommand(
-        "extension.express.api.gen.get.actions", (uri) => {
+        "extension.express.api.gen.post.actions", (uri) => {
             splitEditor(context, uri)
         }
     );
