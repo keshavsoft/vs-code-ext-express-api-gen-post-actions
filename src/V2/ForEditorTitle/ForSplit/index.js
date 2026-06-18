@@ -4,6 +4,7 @@ import path from 'path';
 
 import Insert from "../../CommonCommands/Insert/v2/orchestration/startOrchestration.js";
 import InsertAsIs from "../../CommonCommands/InsertAsIs/v1/orchestration/startOrchestration.js";
+import WithMail from "../../CommonCommands/WithMail/v1/orchestration/startOrchestration.js";
 
 const splitEditor = async (context, uri) => {
     const panel = vscode.window.createWebviewPanel(
@@ -23,6 +24,10 @@ const splitEditor = async (context, uri) => {
 
             if (message.action === "InsertAsIs") {
                 InsertAsIs({ uri });
+            };
+
+            if (message.action === "WithMail") {
+                WithMail({ uri });
             };
         }
     );

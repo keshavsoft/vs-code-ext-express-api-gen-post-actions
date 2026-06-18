@@ -2,7 +2,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import * as vscode from 'vscode';
 
-import { insertGenPk } from 'kschema-fs-api-gen-post-actions';
+import { withMail } from 'kschema-fs-api-gen-post-actions';
 
 import { openFileInEditor } from '../openFile.js';
 
@@ -28,7 +28,7 @@ export async function runFeatureOrchestration({ context, uri }) {
         templatePath: fileURLToPath(new URL('../templates/Base', import.meta.url))
     };
 
-    await insertGenPk({
+    await withMail({
         toPath: context.targetPath, inTargetPath: workspace,
         inGenerateRest: true, toConfigPath: path.join(workspace, "Config", "Schemas", `${tableName}.json`)
     });
