@@ -1,10 +1,10 @@
 {
   "name": "vs-code-ext-express-api-gen-post-actions",
-  "displayName": "express api get actions generate",
-  "description": "express generate from endpoints file, get actions",
+  "displayName": "express api post actions generate",
+  "description": "express generate from endpoints file, post actions",
   "publisher": "KeshavSoft",
   "type": "module",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "engines": {
     "vscode": "^1.116.0"
   },
