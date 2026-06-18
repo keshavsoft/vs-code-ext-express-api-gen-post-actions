@@ -4,7 +4,7 @@
   "description": "express generate from endpoints file, get actions",
   "publisher": "KeshavSoft",
   "type": "module",
-  "version": "1.1.1",
+  "version": "1.2.1",
   "engines": {
     "vscode": "^1.116.0"
   },
