@@ -29,7 +29,7 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <button onclick="showAll()" class="group bg-[#252526]
+                <button onclick="Insert()" class="group bg-[#252526]
                     border border-gray-700
                     rounded-xl p-5 text-left
                     hover:border-blue-500
@@ -46,7 +46,7 @@
                     </div>
                 </button>
 
-                <button onclick="find()" class="group bg-[#252526]
+                <button onclick="InsertAsIs()" class="group bg-[#252526]
                     border border-gray-700
                     rounded-xl p-5 text-left
                     hover:border-blue-500
@@ -80,15 +80,15 @@
     <script>
         const vscode = acquireVsCodeApi();
 
-        function showAll() {
+        function Insert() {
             vscode.postMessage({
-                action: "showAll"
+                action: "Insert"
             });
         };
 
-        function find() {
+        function InsertAsIs() {
             vscode.postMessage({
-                action: "find"
+                action: "InsertAsIs"
             });
         };
 

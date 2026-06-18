@@ -2,8 +2,8 @@ import * as vscode from 'vscode';
 import fs from 'fs';
 import path from 'path';
 
-import ShowAll from "../../CommonCommands/ShowAll/v2/orchestration/startOrchestration.js";
-import Find from "../../CommonCommands/Find/v1/orchestration/startOrchestration.js";
+import Insert from "../../CommonCommands/Insert/v2/orchestration/startOrchestration.js";
+import InsertAsIs from "../../CommonCommands/InsertAsIs/v1/orchestration/startOrchestration.js";
 
 const splitEditor = async (context, uri) => {
     const panel = vscode.window.createWebviewPanel(
@@ -17,12 +17,12 @@ const splitEditor = async (context, uri) => {
 
     panel.webview.onDidReceiveMessage(
         (message) => {
-            if (message.action === "showAll") {
-                ShowAll({ uri });
+            if (message.action === "Insert") {
+                Insert({ uri });
             };
 
-            if (message.action === "find") {
-                Find({ uri });
+            if (message.action === "InsertAsIs") {
+                InsertAsIs({ uri });
             };
         }
     );
