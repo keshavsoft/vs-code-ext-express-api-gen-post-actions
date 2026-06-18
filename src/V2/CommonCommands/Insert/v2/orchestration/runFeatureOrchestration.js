@@ -20,7 +20,7 @@ export async function runFeatureOrchestration({ context, uri }) {
 
     await insertAsIs({
         toPath: context.targetPath, inTargetPath: workspace,
-        inGenerateRest: true
+        inGenerateRest: true, inGenerateRest: true
     });
 
     openFileInEditor({
