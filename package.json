@@ -1,0 +1,55 @@
+{
+  "name": "vs-code-ext-express-api-gen-post-actions",
+  "displayName": "express api get actions generate",
+  "description": "express generate from endpoints file, get actions",
+  "publisher": "KeshavSoft",
+  "type": "module",
+  "version": "1.1.1",
+  "engines": {
+    "vscode": "^1.116.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/keshavsoft/vs-code-ext-express-api-gen-post-actions.git"
+  },
+  "activationEvents": [],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.express.api.gen.get.actions",
+        "title": "SplitGet"
+      }
+    ],
+    "menus": {
+      "explorer/context": [],
+      "editor/context": [],
+      "editor/title": [
+        {
+          "command": "extension.express.api.gen.get.actions",
+          "when": "resourceFilename == end-points.js",
+          "group": "navigation@7"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.116.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "eslint": "^9.39.3",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2"
+  },
+  "dependencies": {
+    "kschema-fs-api-gen-post-actions": "^1.5.4"
+  }
+}
