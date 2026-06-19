@@ -30,7 +30,8 @@ export async function runFeatureOrchestration({ context, uri }) {
 
     await withMail({
         toPath: context.targetPath, inTargetPath: workspace,
-        inGenerateRest: true, toConfigPath: path.join(workspace, "Config", "Schemas", `${tableName}.json`)
+        inGenerateRest: true,
+        toConfigPath: path.join(workspace, "Config", "Schemas", `${tableName}.json`)
     });
 
     openFileInEditor({
