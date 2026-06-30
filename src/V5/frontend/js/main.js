@@ -11,4 +11,4 @@ window.addEventListener("message", ({ data }) => {
 });
 
 // Load schemas on initialization
-// sendAction("loadSchemas");
+sendAction("loadSchemas");
