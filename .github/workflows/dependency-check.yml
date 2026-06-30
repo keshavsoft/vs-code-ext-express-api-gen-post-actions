@@ -1,0 +1,83 @@
+name: Check Dependencies
+
+on:
+  schedule:
+    # Runs every Monday at 9:00 AM UTC (you can adjust this cron schedule)
+    - cron: '0 9 * * 1'
+  workflow_dispatch: # Allows you to run the action manually from the Actions tab
+
+jobs:
+  check-outdated:
+    name: Check Outdated Packages
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Check Outdated Dependencies
+        run: |
+          node -e "
+          const fs = require('fs');
+          const execSync = require('child_process').execSync;
+
+          try {
+            let output;
+            try {
+              output = execSync('npm outdated --json').toString();
+            } catch (error) {
+              // npm outdated exits with status 1 if updates are available, so we get stdout from error
+              output = error.stdout ? error.stdout.toString() : '';
+            }
+
+            if (!output || output.trim() === '' || output.trim() === '{}') {
+              console.log('All dependencies are up to date!');
+              fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, '### ✅ All dependencies are up to date!\n');
+              process.exit(0);
+            }
+
+            const outdated = JSON.parse(output);
+            const packages = Object.keys(outdated);
+
+            if (packages.length === 0) {
+              console.log('All dependencies are up to date!');
+              fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, '### ✅ All dependencies are up to date!\n');
+              process.exit(0);
+            }
+
+            let summaryMarkdown = '### ⚠️ Outdated Dependencies Found\n\n';
+            summaryMarkdown += '| Package | Current | Wanted | Latest | Dependency Type |\n';
+            summaryMarkdown += '| --- | --- | --- | --- | --- |\n';
+
+            for (const pkg of packages) {
+              const info = outdated[pkg];
+              const current = info.current || 'Missing';
+              const wanted = info.wanted || 'N/A';
+              const latest = info.latest || 'N/A';
+              const type = info.type || 'N/A';
+              summaryMarkdown += '| **' + pkg + '** | ' + current + ' | ' + wanted + ' | ' + latest + ' | ' + type + ' |\n';
+            }
+
+            fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, summaryMarkdown);
+            console.log('Outdated dependencies found:');
+            console.table(outdated);
+
+            // Exit with 0 to keep the run green, just showing the findings in the log and step summary
+            process.exit(0);
+          } catch (err) {
+            console.error('Error running check:', err);
+            process.exit(1);
+          }
+          "
+        # Optional: Set this to true if you want the workflow to succeed (stay green)
+        # even if there are outdated dependencies, while still generating the step summary.
+        continue-on-error: false
