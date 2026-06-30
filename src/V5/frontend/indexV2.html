@@ -13,7 +13,7 @@
 
         <div class="mb-6">
             <h1 class="text-2xl font-semibold">
-                Generate - post actions
+                Generate - Post actions
             </h1>
 
             <p class="text-sm text-gray-400 mt-1">
@@ -21,29 +21,11 @@
             </p>
         </div>
 
-        <!-- Folder Name Input -->
-        <div class="mb-6 bg-[#252526] p-5 rounded-xl border border-gray-700">
-            <label for="folder-name" class="block text-sm font-medium text-gray-300 mb-2">
-                New Folder Name (Optional)
-            </label>
-            <div class="relative">
-                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
-                    📁
-                </span>
-                <input type="text" id="folder-name" 
-                    class="w-full bg-[#1e1e1e] border border-gray-700 rounded-lg pl-10 pr-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-sm"
-                    placeholder="Enter folder name to create and generate into (e.g. showAll)">
-            </div>
-            <p class="text-xs text-gray-400 mt-2">
-                If left blank, it will be created with the action name as the folder name only.
-            </p>
-        </div>
-
-        <!-- post Actions -->
+        <!-- get Actions -->
         <div class="mt-6">
 
             <div class="text-sm text-gray-400 mb-3">
-                post Actions
+                Post Actions
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -60,7 +42,7 @@
                     </div>
 
                     <div class="text-sm text-gray-400">
-                        insertGenPk using lowdb content from body
+                        insertGenPk using lowdb
                     </div>
                 </button>
 
@@ -111,7 +93,7 @@
                     </div>
 
                     <div class="text-sm text-gray-400">
-                        groupBy using lowdb and column from queyr param
+                        groupBy using lowdb and vanilla js only
                     </div>
                 </button>
 
@@ -129,7 +111,59 @@
     bg-[#252526] p-4">
         </div>
     </div>
-  
+    <!-- 
+    <script>
+        const vscode = acquireVsCodeApi();
+
+        function showAll() {
+            vscode.postMessage({
+                action: "showAll"
+            });
+        };
+
+        function find() {
+            vscode.postMessage({
+                action: "find"
+            });
+        };
+
+        function FilterQuery() {
+            vscode.postMessage({
+                action: "filterQuery"
+            });
+        };
+
+        window.addEventListener("message", ({ data }) => {
+
+            if (data.type === "status") {
+                document.getElementById("status")
+                    .classList.remove("hidden");
+
+                document.getElementById("status")
+                    .innerHTML = data.text;
+            }
+
+            if (data.type === "summary") {
+                document.getElementById("summary")
+                    .classList.remove("hidden");
+
+                document.getElementById("summary")
+                    .innerHTML = data.html;
+            };
+
+            if (data.type === "complete") {
+                document.getElementById("status")
+                    .classList.add("hidden");
+
+                const summary =
+                    document.getElementById("summary");
+
+                summary.classList.remove("hidden");
+                summary.innerHTML = data.html;
+            }
+        });
+    </script> -->
+
 </body>
 
 </html>
