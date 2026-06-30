@@ -2,9 +2,18 @@ import findAction from "./actions/find.js";
 import insertGenPkAction from "./actions/insertGenPk.js";
 import filterQueryAction from "./actions/filterQuery.js";
 import groupByAction from "./actions/groupBy.js";
+import { getSchemaFiles } from "./schemaService.js";
 
 export async function handleWebviewMessage({ message, panel, toPath, schemasPath }) {
     switch (message.action) {
+        case "loadSchemas":
+            const schemas = getSchemaFiles(schemasPath);
+            panel.webview.postMessage({
+                type: "schemas",
+                schemas
+            });
+            break;
+
         case "insertGenPk":
             await insertGenPkAction({
                 panel,
