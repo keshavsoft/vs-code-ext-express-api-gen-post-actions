@@ -1,11 +1,12 @@
+import * as vscode from 'vscode';
+
 export async function executeGenerationTask({
     panel,
     actionLabel,
     tableName,
     toPath,
     configPath,
-    generateFunc,
-    inTargetPath
+    generateFunc
 }) {
     panel.webview.postMessage({
         type: "status",
@@ -13,6 +14,8 @@ export async function executeGenerationTask({
     });
 
     try {
+        const workspace = vscode.workspace.workspaceFolders?.[0].uri.fsPath;
+
         await generateFunc({
             showLog: true,
             isAnnounce: true,
@@ -20,7 +23,8 @@ export async function executeGenerationTask({
             tableName,
             toConfigPath: configPath,
             inGenerateRest: true,
-            inTargetPath
+            inTargetPath: workspace,
+            inFolderName: "ffffffff"
         });
 
         panel.webview.postMessage({
