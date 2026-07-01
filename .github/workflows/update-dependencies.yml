@@ -5,9 +5,10 @@ on:
   repository_dispatch:
     types: [parent_package_updated]
 
-# Ensure the workflow has permission to commit and push changes
+# Ensure the workflow has permission to commit and push changes and create pull requests
 permissions:
   contents: write
+  pull-requests: write
 
 
 jobs:
@@ -60,22 +61,13 @@ jobs:
           }
           "
 
-      - name: Commit and Push Updates
-        env:
-          DISPATCH_TOKEN: ${{ secrets.DISPATCH_TOKEN }}
-        run: |
-          # Configure git
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          
-          # Check if there are any changes before pushing
-          if git diff-index --quiet HEAD --; then
-            echo "No dependency updates found."
-          else
-            git add package.json package-lock.json
-            git commit -m "chore: auto-update production dependencies to latest"
-            
-            # Push directly to main using the PAT token
-            git push https://x-access-token:${DISPATCH_TOKEN}@github.com/keshavsoft/vs-code-ext-express-api-gen-post-actions.git main
-          fi
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: auto-update production dependencies to latest"
+          title: "chore: auto-update production dependencies to latest"
+          body: "This PR was automatically created to update production dependencies."
+          branch: "auto-update-dependencies"
+          delete-branch: true
 
