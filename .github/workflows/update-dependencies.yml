@@ -3,10 +3,10 @@ name: Update Dependencies
 on:
   workflow_dispatch: # Allows you to manually trigger this update from the Actions tab
 
-# Ensure the workflow has permission to commit, push branches, and create pull requests
+# Ensure the workflow has permission to commit and push changes
 permissions:
   contents: write
-  pull-requests: write
+
 
 jobs:
   update-deps:
@@ -58,32 +58,20 @@ jobs:
           }
           "
 
-      - name: Create Pull Request
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit and Push Updates
         run: |
           # Configure git
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Check if there are any changes before creating PR
+          # Check if there are any changes before pushing
           if git diff-index --quiet HEAD --; then
             echo "No dependency updates found."
           else
-            # Create a unique branch name with a timestamp
-            BRANCH_NAME="update-deps-$(date +%s)"
-            git checkout -b "$BRANCH_NAME"
-            
             git add package.json package-lock.json
             git commit -m "chore: auto-update production dependencies to latest"
             
-            # Push the branch to origin
-            git push origin "$BRANCH_NAME"
-            
-            # Create Pull Request
-            gh pr create \
-              --title "chore: update production dependencies to latest" \
-              --body "This PR was automatically created by the **Update Dependencies** workflow to update your production packages to their latest versions." \
-              --head "$BRANCH_NAME" \
-              --base main
+            # Push directly to main
+            git push origin main
           fi
+
