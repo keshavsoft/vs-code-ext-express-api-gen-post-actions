@@ -6,7 +6,8 @@ export async function executeGenerationTask({
     tableName,
     toPath,
     configPath,
-    generateFunc
+    generateFunc,
+    inFolderName
 }) {
     panel.webview.postMessage({
         type: "status",
@@ -24,7 +25,7 @@ export async function executeGenerationTask({
             toConfigPath: configPath,
             inGenerateRest: true,
             inTargetPath: workspace,
-            inFolderName: "ffffffff"
+            inFolderName: inFolderName || ""
         });
 
         panel.webview.postMessage({

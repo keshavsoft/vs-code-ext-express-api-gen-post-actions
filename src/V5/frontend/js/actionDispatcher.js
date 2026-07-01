@@ -3,8 +3,13 @@ function getSelectedTable() {
     return tableSelect ? tableSelect.value : "";
 }
 
+function getFolderName() {
+    const folderInput = document.getElementById("folder-name");
+    return folderInput ? folderInput.value.trim() : "";
+}
+
 function insertGenPk() {
-    sendAction("insertGenPk", { tableName: getSelectedTable() });
+    sendAction("insertGenPk", { tableName: getSelectedTable(), inFolderName: getFolderName() });
 }
 
 function find() {
@@ -17,4 +22,4 @@ function filterQuery() {
 
 const groupBy = () => {
     sendAction("groupBy", { tableName: getSelectedTable() });
-};
+};
