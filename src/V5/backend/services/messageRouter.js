@@ -29,7 +29,8 @@ export async function handleWebviewMessage({ message, panel, toPath, schemasPath
                 panel,
                 tableName: message.tableName,
                 toPath,
-                schemasPath
+                schemasPath,
+                inFolderName: message.inFolderName
             });
             break;
 
@@ -38,7 +39,8 @@ export async function handleWebviewMessage({ message, panel, toPath, schemasPath
                 panel,
                 tableName: message.tableName,
                 toPath,
-                schemasPath
+                schemasPath,
+                inFolderName: message.inFolderName
             });
             break;
 
@@ -47,7 +49,8 @@ export async function handleWebviewMessage({ message, panel, toPath, schemasPath
                 panel,
                 tableName: message.tableName,
                 toPath,
-                schemasPath
+                schemasPath,
+                inFolderName: message.inFolderName
             });
             break;
     }
