@@ -61,6 +61,8 @@ jobs:
           "
 
       - name: Commit and Push Updates
+        env:
+          DISPATCH_TOKEN: ${{ secrets.DISPATCH_TOKEN }}
         run: |
           # Configure git
           git config --global user.name "github-actions[bot]"
@@ -73,7 +75,7 @@ jobs:
             git add package.json package-lock.json
             git commit -m "chore: auto-update production dependencies to latest"
             
-            # Push directly to main
-            git push origin main
+            # Push directly to main using the PAT token
+            git push https://x-access-token:${DISPATCH_TOKEN}@github.com/keshavsoft/vs-code-ext-express-api-gen-post-actions.git main
           fi
 
