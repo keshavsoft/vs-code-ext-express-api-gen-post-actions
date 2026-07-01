@@ -2,7 +2,9 @@ import { groupBy } from 'kschema-fs-api-gen-post-actions';
 
 import { executeGenerationTask } from "../generatorService.js";
 
-const startFunc = async ({ panel, tableName, toPath, schemasPath, inFolderName }) => {
+const startFunc = async ({ panel, tableName, toPath, schemasPath, inFolderName,
+    inTargetPath, inPort
+}) => {
     await executeGenerationTask({
         panel,
         actionLabel: "With Header",
@@ -10,7 +12,7 @@ const startFunc = async ({ panel, tableName, toPath, schemasPath, inFolderName }
         toPath,
         configPath: schemasPath,
         generateFunc: groupBy,
-        inFolderName
+        inFolderName, inTargetPath, inPort
     });
 };
 

@@ -8,6 +8,7 @@ export async function executeGenerationTask({
     configPath,
     generateFunc,
     inFolderName,
+    inTargetPath,
     inPort
 }) {
     panel.webview.postMessage({
@@ -16,8 +17,6 @@ export async function executeGenerationTask({
     });
 
     try {
-        const workspace = vscode.workspace.workspaceFolders?.[0].uri.fsPath;
-
         await generateFunc({
             showLog: true,
             isAnnounce: true,
@@ -25,7 +24,7 @@ export async function executeGenerationTask({
             tableName,
             toConfigPath: configPath,
             inGenerateRest: true,
-            inTargetPath: workspace,
+            inTargetPath,
             inFolderName: inFolderName || "",
             inPort
         });

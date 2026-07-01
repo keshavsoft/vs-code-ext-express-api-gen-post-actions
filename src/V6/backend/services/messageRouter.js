@@ -4,7 +4,8 @@ import filterQueryAction from "./actions/filterQuery.js";
 import groupByAction from "./actions/groupBy.js";
 import { getSchemaFiles } from "./schemaService.js";
 
-export async function handleWebviewMessage({ message, panel, toPath, schemasPath }) {
+export async function handleWebviewMessage({ message, panel, toPath, schemasPath,
+    port, inTargetPath }) {
     switch (message.action) {
         case "loadSchemas":
             const schemas = getSchemaFiles(schemasPath);
@@ -20,7 +21,9 @@ export async function handleWebviewMessage({ message, panel, toPath, schemasPath
                 tableName: message.tableName,
                 toPath,
                 schemasPath,
-                inFolderName: message.inFolderName
+                inFolderName: message.inFolderName,
+                inTargetPath,
+                inPort: port
             });
             break;
 
@@ -50,7 +53,9 @@ export async function handleWebviewMessage({ message, panel, toPath, schemasPath
                 tableName: message.tableName,
                 toPath,
                 schemasPath,
-                inFolderName: message.inFolderName
+                inFolderName: message.inFolderName,
+                inTargetPath,
+                inPort: port
             });
             break;
     }
