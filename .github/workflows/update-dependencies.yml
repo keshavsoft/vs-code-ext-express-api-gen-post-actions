@@ -2,6 +2,8 @@ name: Update Dependencies
 
 on:
   workflow_dispatch: # Allows you to manually trigger this update from the Actions tab
+  repository_dispatch:
+    types: [parent_package_updated]
 
 # Ensure the workflow has permission to commit and push changes
 permissions:
