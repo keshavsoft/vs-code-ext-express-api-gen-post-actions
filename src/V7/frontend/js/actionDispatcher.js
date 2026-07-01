@@ -31,3 +31,8 @@ function filterQuery() {
 const groupBy = () => {
     sendAction("groupBy", { tableName: getSelectedTable(), inFolderName: getFolderName("groupBy") });
 };
+
+const insertWithMeta = () => {
+    const cmd = "insertWithMeta";
+    sendAction(cmd, { tableName: getSelectedTable(), inFolderName: getFolderName(cmd) });
+};

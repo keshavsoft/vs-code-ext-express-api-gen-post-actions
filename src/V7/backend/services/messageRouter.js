@@ -2,6 +2,8 @@ import findAction from "./actions/find.js";
 import insertGenPkAction from "./actions/insertGenPk.js";
 import filterQueryAction from "./actions/filterQuery.js";
 import groupByAction from "./actions/groupBy.js";
+import insertWithMetaAction from "./actions/insertWithMeta.js";
+
 import { getSchemaFiles } from "./schemaService.js";
 
 export async function handleWebviewMessage({ message, panel, toPath, schemasPath,
@@ -49,6 +51,18 @@ export async function handleWebviewMessage({ message, panel, toPath, schemasPath
 
         case "groupBy":
             await groupByAction({
+                panel,
+                tableName: message.tableName,
+                toPath,
+                schemasPath,
+                inFolderName: message.inFolderName,
+                inTargetPath,
+                inPort: port
+            });
+            break;
+
+        case "insertWithMeta":
+            await insertWithMetaAction({
                 panel,
                 tableName: message.tableName,
                 toPath,
