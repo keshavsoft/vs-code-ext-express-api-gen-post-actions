@@ -13,13 +13,13 @@ function insertGenPk() {
 }
 
 function find() {
-    sendAction("filter", { tableName: getSelectedTable() });
+    sendAction("filter", { tableName: getSelectedTable(), inFolderName: getFolderName() });
 }
 
 function filterQuery() {
-    sendAction("filterQuery", { tableName: getSelectedTable() });
+    sendAction("filterQuery", { tableName: getSelectedTable(), inFolderName: getFolderName() });
 };
 
 const groupBy = () => {
-    sendAction("groupBy", { tableName: getSelectedTable() });
-};
+    sendAction("groupBy", { tableName: getSelectedTable(), inFolderName: getFolderName() });
+};
