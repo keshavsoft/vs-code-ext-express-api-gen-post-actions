@@ -4,7 +4,7 @@
   "description": "express generate from endpoints file, post actions",
   "publisher": "KeshavSoft",
   "type": "module",
-  "version": "1.7.2",
+  "version": "1.8.1",
   "engines": {
     "vscode": "^1.116.0"
   },
@@ -50,6 +50,7 @@
     "eslint": "^9.39.3"
   },
   "dependencies": {
-    "kschema-fs-api-gen-post-actions": "^1.19.9"
+    "kschema-fs-api-gen-post-actions": "^1.19.9",
+    "kschema-fs-read-config": "^1.3.1"
   }
 }
