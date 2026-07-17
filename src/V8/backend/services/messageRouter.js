@@ -10,7 +10,9 @@ export async function handleWebviewMessage({ message, panel, toPath, schemasPath
     port, inTargetPath }) {
     switch (message.action) {
         case "loadSchemas":
+
             const schemas = getSchemaFiles(inTargetPath);
+
             panel.webview.postMessage({
                 type: "schemas",
                 schemas
