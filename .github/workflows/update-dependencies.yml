@@ -30,31 +30,48 @@ jobs:
         run: npm ci
 
       - name: Update Normal Dependencies
+        id: update_step
+        env:
+          PAYLOAD_PACKAGE: ${{ github.event.client_payload.package }}
+          PAYLOAD_VERSION: ${{ github.event.client_payload.version }}
         run: |
           node -e "
           const fs = require('fs');
           const execSync = require('child_process').execSync;
 
           try {
-            // Read package.json
-            const pkgJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
-            const deps = Object.keys(pkgJson.dependencies || {});
+            const pkg = process.env.PAYLOAD_PACKAGE;
+            const version = process.env.PAYLOAD_VERSION;
+            let commitMsg = 'chore: auto-update production dependencies to latest';
 
-            if (deps.length === 0) {
-              console.log('No production dependencies found in package.json.');
-              process.exit(0);
+            if (pkg && version) {
+              console.log('Updating specific package: ' + pkg + '@' + version);
+              const installCmd = 'npm install ' + pkg + '@' + version + ' --save';
+              console.log('Running: ' + installCmd);
+              execSync(installCmd, { stdio: 'inherit' });
+              commitMsg = 'chore: update ' + pkg + ' to ' + version;
+            } else {
+              // Read package.json
+              const pkgJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+              const deps = Object.keys(pkgJson.dependencies || {});
+
+              if (deps.length === 0) {
+                console.log('No production dependencies found in package.json.');
+                process.exit(0);
+              }
+
+              console.log('Updating production dependencies to latest:', deps.join(', '));
+              
+              // Construct the install command targeting only production dependencies
+              const installTargets = deps.map(dep => dep + '@latest').join(' ');
+              const installCmd = 'npm install ' + installTargets + ' --save';
+              
+              console.log('Running: ' + installCmd);
+              execSync(installCmd, { stdio: 'inherit' });
             }
-
-            console.log('Updating production dependencies to latest:', deps.join(', '));
             
-            // Construct the install command targeting only production dependencies
-            const installTargets = deps.map(dep => dep + '@latest').join(' ');
-            const installCmd = 'npm install ' + installTargets + ' --save';
-            
-            console.log('Running: ' + installCmd);
-            execSync(installCmd, { stdio: 'inherit' });
-            
-            console.log('Successfully updated production dependencies!');
+            console.log('Successfully updated dependencies!');
+            fs.appendFileSync(process.env.GITHUB_OUTPUT, 'commit_msg=' + commitMsg + '\n');
           } catch (error) {
             console.error('Failed to update dependencies:', error);
             process.exit(1);
@@ -65,8 +82,8 @@ jobs:
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "chore: auto-update production dependencies to latest"
-          title: "chore: auto-update production dependencies to latest"
+          commit-message: ${{ steps.update_step.outputs.commit_msg }}
+          title: ${{ steps.update_step.outputs.commit_msg }}
           body: "This PR was automatically created to update production dependencies."
           branch: "auto-update-dependencies"
           delete-branch: true
