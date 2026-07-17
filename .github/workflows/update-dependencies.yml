@@ -47,8 +47,23 @@ jobs:
             if (pkg && version) {
               console.log('Updating specific package: ' + pkg + '@' + version);
               const installCmd = 'npm install ' + pkg + '@' + version + ' --save';
-              console.log('Running: ' + installCmd);
-              execSync(installCmd, { stdio: 'inherit' });
+              
+              let success = false;
+              for (let attempt = 1; attempt <= 6; attempt++) {
+                try {
+                  console.log('Attempt ' + attempt + ' to install ' + pkg + '@' + version);
+                  execSync(installCmd, { stdio: 'inherit' });
+                  success = true;
+                  break;
+                } catch (installError) {
+                  if (attempt === 6) {
+                    throw new Error('Failed to install ' + pkg + '@' + version + ' after 6 attempts: ' + installError.message);
+                  }
+                  console.log('Installation attempt ' + attempt + ' failed (it may take a moment for the new version to propagate). Retrying in 15 seconds...');
+                  // Synchronous sleep in Node.js
+                  Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 15000);
+                }
+              }
               commitMsg = 'chore: update ' + pkg + ' to ' + version;
             } else {
               // Read package.json
