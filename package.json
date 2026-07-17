@@ -51,6 +51,6 @@
   },
   "dependencies": {
     "kschema-fs-api-gen-post-actions": "^1.19.9",
-    "kschema-fs-read-config": "^1.4.2"
+    "kschema-fs-read-config": "^1.4.3"
   }
 }
