@@ -19,6 +19,8 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.DISPATCH_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
