@@ -50,7 +50,7 @@
     "eslint": "^9.39.3"
   },
   "dependencies": {
-    "kschema-fs-api-gen-post-actions": "^1.20.12",
+    "kschema-fs-api-gen-post-actions": "^1.20.13",
     "kschema-fs-read-config": "^1.6.1"
   }
 }
